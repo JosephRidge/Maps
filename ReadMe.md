@@ -6,8 +6,20 @@ https://stackoverflow.com/questions/72023432/plugin-id-com-google-android-librar
 
 
 Add Secrets: 
+- Add dependency: 
+in your app build.gradle:
+ ` implementation(libs.secrets.gradle.plugin)`
 
-create [secrets.properties](secrets.properties) file in the root project directory
+int your libs.versions.toml file: 
+ 
+- under dependencies:
+`secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }`
+
+- under the [versions]:
+`secretsGradlePlugin = "2.0.1"`
+
+
+- create [secrets.properties](secrets.properties) file in the root project directory
 add your api_key there eg MAP_API_KEY
 
 Navigate to app level build.gradle and add:
@@ -24,6 +36,21 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
 
+}
+```
+
+- add this under a sectoin on its own:
+```agsl
+secrets {
+    // To add your Maps API key to this project:
+    // 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
+    // 2. Add this line, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.properties"
 }
 ```
 
