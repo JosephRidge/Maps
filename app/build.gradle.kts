@@ -5,49 +5,46 @@ plugins {
 }
 
 android {
-    namespace = "com.jayr.mapz"
-    compileSdk = 35
+    namespace = "com.example.app"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.jayr.mapz"
-        minSdk = 24
-        targetSdk = 35
+        applicationId = "com.example.app"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
-    implementation(libs.maps.compose)
-    implementation(libs.arcgis.maps.kotlin.toolkit.bom)
-    implementation(libs.esri.arcgis.maps.kotlin.toolkit.geoview.compose)
-    implementation(libs.esri.arcgis.maps.kotlin.toolkit.authentication)
-    implementation(libs.arcgis.maps.kotlin)
-    implementation(platform(libs.arcgis.maps.kotlin.toolkit.bom))
-    implementation(libs.arcgis.maps.kotlin.toolkit.geoview.compose)
-    implementation(libs.arcgis.maps.kotlin.toolkit.authentication)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,4 +60,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // ArcGIS Maps for Kotlin - SDK dependency
+    implementation(libs.arcgis.maps.kotlin)
+    // Toolkit dependencies
+    implementation(platform(libs.arcgis.maps.kotlin.toolkit.bom))
+    implementation(libs.arcgis.maps.kotlin.toolkit.geoview.compose)
+    implementation(libs.arcgis.maps.kotlin.toolkit.authentication)
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -31,10 +32,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             MapzTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                   Column( modifier = Modifier.padding(innerPadding)) {
+                        MainScreen(
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
         }
@@ -52,32 +54,20 @@ fun createMap(): ArcGISMap {
 }
 
 @Composable
-fun MainScreen() {
-
+fun MainScreen(modifier: Modifier){
     val map = remember {
-        createMap()
+//        Column(modifier = modifier){
+            createMap()
+//        }
     }
 
 }
 //AAPTxy8BH1VEsoebNVZXo8HurLy1kvJ6TrfnBN6yXF9zToXQy_fkN-lLOsD8S3SMuVEqmxiKfwHUbcrTjTyVr1PJ79WUp_t0NkNiKbrUUkSrdVXWTR0ToyPZKOG7ZH1gWIHm2zLyJ-svGgTbBmw2zN6pMJ4e6y5ILiyyAOeBZhKmezcQvtbrKCJ49ya9l4NAoSExqXxgdQwpMbvRMpPtrUODBhv-rSbkmWRTN6ukbn3a5xg.AT1_a4xgGHex
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val singapore = LatLng(1.35, 103.87)
-    val singaporeMarkerState = rememberMarkerState(position = singapore)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 10f)
-    }
-    GoogleMap(
-        modifier = Modifier.fillMaxSize(),
-        cameraPositionState = cameraPositionState
-    ) {
-        Marker(
-            state = singaporeMarkerState,
-            title = "Singapore",
-            snippet = "Marker in Singapore"
-        )
-    }
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
